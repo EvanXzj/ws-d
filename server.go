@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path"
 	"strconv"
+	"fmt"
 )
 
 type Post struct {
@@ -15,7 +16,7 @@ type Post struct {
 
 func main() {
 	server := http.Server{
-		Addr: ":3000",
+		Addr: ":8080",
 	}
 	http.HandleFunc("/post/", handlePost)
 	server.ListenAndServe()
@@ -70,6 +71,7 @@ func postPost(w http.ResponseWriter, r *http.Request) (err error) {
 	json.Unmarshal(body, &post)
 	err = post.create()
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 	w.WriteHeader(200)
